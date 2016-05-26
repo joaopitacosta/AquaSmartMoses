@@ -1,0 +1,25 @@
+
+# BLUE Evaluation Score
+# at UNIX 
+# for AquaSmart Project
+
+# based on:
+# https://en.wikipedia.org/wiki/Tokenization_%28lexical_analysis%29
+
+
+$HOME/mosesdecoder/scripts/tokenizer/tokenizer.perl  -l en < ref_en-pt.org.en > ref_en-pt.tok.en
+
+cat ref_en-pt.tok.en | sed 's/\([.!?]\) \([[:upper:]]\)/\1\n\2/g' > ref_en-pt.lin.en
+
+# vi ref_en-pt.lin.en
+
+$HOME/mosesdecoder/scripts/tokenizer/tokenizer.perl  -l pt < ref_en-pt.org.pt > ref_en-pt.tok.pt
+
+cat ref_en-pt.tok.pt | sed 's/\([.!?]\) \([[:upper:]]\)/\1\n\2/g' > ref_en-pt.lin.pt
+
+# vi ref_en-pt.lin.pt
+
+$HOME/mosesdecoder/scripts/generic/multi-bleu.perl ref_en-pt.lin.en < ref_en-pt.lin.pt 
+
+# Alarm
+xbanner BLEU done
